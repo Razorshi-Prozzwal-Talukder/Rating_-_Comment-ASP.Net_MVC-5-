@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Rating_Comment.Models.tbl_platter>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Addplatter")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.platter_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.platter_description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.platter_image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.platter_price)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.platter_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.platter_description)
+    </td>
+    <td>
+        @{
+            var base64 = Convert.ToBase64String(item.platter_image);
+            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+        }
+        <img src='@imgsrc' style="max-width:100px; max-height:100px" />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.platter_price)
+    </td>
+
+    <td>
+        @Html.ActionLink("Review", "Review", new { platterId = item.platter_id })
+
+    </td>
+    <td>
+        @Html.ActionLink("Vote", "Vote", new { platterId = item.platter_id })
+
+    </td>
+</tr>
+}
+
+</table>

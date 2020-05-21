@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="platter_id" Type="int" Nullable="false" />
+          <Property Name="guest_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="comment_description" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
+          <Property Name="commentedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_platter">
+          <Key>
+            <PropertyRef Name="platter_id" />
+          </Key>
+          <Property Name="platter_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="platter_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="platter_description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="platter_image" Type="varbinary(max)" Nullable="false" />
+          <Property Name="platter_price" Type="int" Nullable="false" />
+          <Property Name="Rest_id" Type="int" Nullable="false" />
+          <Property Name="secret_code" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoteLog">
+          <Key>
+            <PropertyRef Name="AutoId" />
+          </Key>
+          <Property Name="AutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectionId" Type="smallint" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Vote" Type="smallint" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Comments_tbl_platter">
+          <End Role="tbl_platter" Type="Self.tbl_platter" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_platter">
+              <PropertyRef Name="platter_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="platter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleModelStoreContainer">
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_platter" EntityType="Self.tbl_platter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoteLog" EntityType="Self.VoteLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_tbl_platter" Association="Self.FK_Comments_tbl_platter">
+            <End Role="tbl_platter" EntitySet="tbl_platter" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="platter_id" Type="Int32" Nullable="false" />
+          <Property Name="guest_id" Type="Guid" Nullable="false" />
+          <Property Name="comment_description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
+          <Property Name="commentedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_platter" Relationship="Self.FK_Comments_tbl_platter" FromRole="Comments" ToRole="tbl_platter" />
+        </EntityType>
+        <EntityType Name="tbl_platter">
+          <Key>
+            <PropertyRef Name="platter_id" />
+          </Key>
+          <Property Name="platter_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="platter_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="platter_description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="platter_image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="platter_price" Type="Int32" Nullable="false" />
+          <Property Name="Rest_id" Type="Int32" Nullable="false" />
+          <Property Name="secret_code" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_tbl_platter" FromRole="tbl_platter" ToRole="Comments" />
+        </EntityType>
+        <Association Name="FK_Comments_tbl_platter">
+          <End Role="tbl_platter" Type="Self.tbl_platter" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_platter">
+              <PropertyRef Name="platter_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="platter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="tbl_platter" EntityType="Self.tbl_platter" />
+          <AssociationSet Name="FK_Comments_tbl_platter" Association="Self.FK_Comments_tbl_platter">
+            <End Role="tbl_platter" EntitySet="tbl_platter" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="tbl_user" EntityType="SampleModel.tbl_user" />
+          <EntitySet Name="VoteLogs" EntityType="SampleModel.VoteLog" />
+        </EntityContainer>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VoteLog">
+          <Key>
+            <PropertyRef Name="AutoId" />
+          </Key>
+          <Property Name="AutoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionId" Type="Int16" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vote" Type="Int16" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SampleModelStoreContainer" CdmEntityContainer="SampleEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="SampleModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+                <ScalarProperty Name="platter_id" ColumnName="platter_id" />
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+                <ScalarProperty Name="comment_description" ColumnName="comment_description" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="commentedOn" ColumnName="commentedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_platter">
+            <EntityTypeMapping TypeName="SampleModel.tbl_platter">
+              <MappingFragment StoreEntitySet="tbl_platter">
+                <ScalarProperty Name="platter_id" ColumnName="platter_id" />
+                <ScalarProperty Name="platter_name" ColumnName="platter_name" />
+                <ScalarProperty Name="platter_description" ColumnName="platter_description" />
+                <ScalarProperty Name="platter_image" ColumnName="platter_image" />
+                <ScalarProperty Name="platter_price" ColumnName="platter_price" />
+                <ScalarProperty Name="Rest_id" ColumnName="Rest_id" />
+                <ScalarProperty Name="secret_code" ColumnName="secret_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="SampleModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteLogs">
+            <EntityTypeMapping TypeName="SampleModel.VoteLog">
+              <MappingFragment StoreEntitySet="VoteLog">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Vote" ColumnName="Vote" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="AutoId" ColumnName="AutoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

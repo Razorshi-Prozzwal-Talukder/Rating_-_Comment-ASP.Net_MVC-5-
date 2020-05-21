@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SampleModelStoreContainer" CdmEntityContainer="SampleEntities">
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="SampleModel.Comment">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+          <ScalarProperty Name="platter_id" ColumnName="platter_id" />
+          <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+          <ScalarProperty Name="comment_description" ColumnName="comment_description" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="commentedOn" ColumnName="commentedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_platter">
+      <EntityTypeMapping TypeName="SampleModel.tbl_platter">
+        <MappingFragment StoreEntitySet="tbl_platter">
+          <ScalarProperty Name="platter_id" ColumnName="platter_id" />
+          <ScalarProperty Name="platter_name" ColumnName="platter_name" />
+          <ScalarProperty Name="platter_description" ColumnName="platter_description" />
+          <ScalarProperty Name="platter_image" ColumnName="platter_image" />
+          <ScalarProperty Name="platter_price" ColumnName="platter_price" />
+          <ScalarProperty Name="Rest_id" ColumnName="Rest_id" />
+          <ScalarProperty Name="secret_code" ColumnName="secret_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_user">
+      <EntityTypeMapping TypeName="SampleModel.tbl_user">
+        <MappingFragment StoreEntitySet="tbl_user">
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VoteLogs">
+      <EntityTypeMapping TypeName="SampleModel.VoteLog">
+        <MappingFragment StoreEntitySet="VoteLog">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Vote" ColumnName="Vote" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="AutoId" ColumnName="AutoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

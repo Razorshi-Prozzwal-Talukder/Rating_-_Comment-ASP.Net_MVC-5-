@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="comment_id" />
+    </Key>
+    <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="platter_id" Type="int" Nullable="false" />
+    <Property Name="guest_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="comment_description" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="rating" Type="int" Nullable="false" />
+    <Property Name="commentedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_platter">
+    <Key>
+      <PropertyRef Name="platter_id" />
+    </Key>
+    <Property Name="platter_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="platter_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="platter_description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="platter_image" Type="varbinary(max)" Nullable="false" />
+    <Property Name="platter_price" Type="int" Nullable="false" />
+    <Property Name="Rest_id" Type="int" Nullable="false" />
+    <Property Name="secret_code" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VoteLog">
+    <Key>
+      <PropertyRef Name="AutoId" />
+    </Key>
+    <Property Name="AutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectionId" Type="smallint" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Vote" Type="smallint" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <Association Name="FK_Comments_tbl_platter">
+    <End Role="tbl_platter" Type="Self.tbl_platter" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_platter">
+        <PropertyRef Name="platter_id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="platter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SampleModelStoreContainer">
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_platter" EntityType="Self.tbl_platter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VoteLog" EntityType="Self.VoteLog" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Comments_tbl_platter" Association="Self.FK_Comments_tbl_platter">
+      <End Role="tbl_platter" EntitySet="tbl_platter" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

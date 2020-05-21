@@ -1,0 +1,27 @@
+﻿@model Rating_Comment.ViewModel.CommentViewModel
+
+<table style="width: 100%; border: 1px solid black">
+    <tr>
+        <td>
+            @Model.commentedOn.ToString("dd-MMM-yyyy HH:mm")
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Model.comment_description
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @for (int i = 1; i <= @Model.rating; i++)
+            {
+                <span class="glyphicon glyphicon-star"></span>
+            }
+            @for (int i = @Model.rating; i <= 5; i++)
+            {
+                <span class="glyphicon glyphicon-star-empty"></span>
+            }
+        </td>
+    </tr>
+
+</table>
